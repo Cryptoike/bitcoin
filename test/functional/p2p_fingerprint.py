@@ -4,7 +4,7 @@
 # file COPYING or http://www.opensource.org/licenses/mit-license.php.
 """Test various fingerprinting protections.
 
-If a stale block more than a month old or its header are requested by a peer,
+If an stale block more than a month old or its header are requested by a peer,
 the node should pretend that it does not have it to avoid fingerprinting.
 """
 
@@ -38,6 +38,7 @@ class P2PFingerprintTest(BitcoinTestFramework):
             coinbase = create_coinbase(prev_height + 1)
             block_time = prev_median_time + 1
             block = create_block(int(prev_hash, 16), coinbase, block_time)
+            block.nVersion = 0x20000000
             block.solve()
 
             blocks.append(block)

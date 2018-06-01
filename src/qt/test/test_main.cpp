@@ -13,7 +13,6 @@
 #include <qt/test/compattests.h>
 
 #ifdef ENABLE_WALLET
-#include <qt/test/addressbooktests.h>
 #include <qt/test/paymentservertests.h>
 #include <qt/test/wallettests.h>
 #endif
@@ -55,7 +54,7 @@ int main(int argc, char *argv[])
     SelectParams(CBaseChainParams::MAIN);
     noui_connect();
     ClearDatadirCache();
-    fs::path pathTemp = fs::temp_directory_path() / strprintf("test_bitcoin-qt_%lu_%i", (unsigned long)GetTime(), (int)GetRand(100000));
+    fs::path pathTemp = fs::temp_directory_path() / strprintf("test_litecoin-qt_%lu_%i", (unsigned long)GetTime(), (int)GetRand(100000));
     fs::create_directories(pathTemp);
     gArgs.ForceSetArg("-datadir", pathTemp.string());
 
@@ -73,7 +72,7 @@ int main(int argc, char *argv[])
     // Don't remove this, it's needed to access
     // QApplication:: and QCoreApplication:: in the tests
     QApplication app(argc, argv);
-    app.setApplicationName("Bitcoin-Qt-test");
+    app.setApplicationName("Litecoin-Qt-test");
 
     SSL_library_init();
 
@@ -98,10 +97,6 @@ int main(int argc, char *argv[])
 #ifdef ENABLE_WALLET
     WalletTests test5;
     if (QTest::qExec(&test5) != 0) {
-        fInvalid = true;
-    }
-    AddressBookTests test6;
-    if (QTest::qExec(&test6) != 0) {
         fInvalid = true;
     }
 #endif
